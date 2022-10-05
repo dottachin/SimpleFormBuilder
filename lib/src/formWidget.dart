@@ -764,14 +764,14 @@ class _FormBuilderState extends State<FormBuilder> {
                     child: TextField(
                       maxLines: e.maxline,
                       keyboardType: TextInputType.numberWithOptions(decimal: allowDecimal),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
-                        TextInputFormatter.withFunction(
-                          (oldValue, newValue) => newValue.copyWith(
-                            text: newValue.text.replaceAll('.', ','),
-                          ),
-                        ),
-                      ],
+//                       inputFormatters: <TextInputFormatter>[
+//                         FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
+//                         TextInputFormatter.withFunction(
+//                           (oldValue, newValue) => newValue.copyWith(
+//                             text: newValue.text.replaceAll('.', ','),
+//                           ),
+//                         ),
+//                       ],
                       onChanged: (value) {
                         // e.answer = value;
                         setState(() {
