@@ -249,7 +249,7 @@ class _FormBuilderState extends State<FormBuilder> {
                   child: DropdownButton(
                     underline: SizedBox(),
                     hint: e.answer == null
-                        ? Text('Select option')
+                        ? Text('Sélectionner votre option')
                         : Text(
                             e.answer,
                             style: TextStyle(
@@ -709,7 +709,7 @@ class _FormBuilderState extends State<FormBuilder> {
                       ),
                       decoration: widget.textfieldDecoration ??
                           InputDecoration.collapsed(
-                            hintText: "Text ...",
+                            hintText: "Entrez votre texte ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
@@ -722,7 +722,80 @@ class _FormBuilderState extends State<FormBuilder> {
             remarkWidget(e, remarks, widget.remarkImage),
           ],
         );
-        
+            case "number":
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, top: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.showIcon
+                      ? iconContainer(widget.textImage)
+                      : Container(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                        "${widget.showIndex ? "${checklistModel!.data![widget.index].questions!.indexOf(e) + 1}. " : ""}${e.title}"),
+                  ),
+                  descriptionWidget(
+                      e, context, widget.descriptionTextDecoration),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16,
+              ),
+              child: Container(
+                width: screenWidth(
+                    context: context,
+                    mulBy: widget.textFieldWidth == null
+                        ? 0.9
+                        : widget.textFieldWidth),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      maxLines: e.maxline,
+                      keyboardType: TextInputType.numberWithOptions(decimal: allowDecimal),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
+                        TextInputFormatter.withFunction(
+                          (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.replaceAll('.', ','),
+                          ),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        // e.answer = value;
+                        setState(() {
+                          e.answer = value;
+                        });
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: widget.textfieldDecoration ??
+                          InputDecoration.collapsed(
+                            hintText: "Entrez votre texte ...",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            remarkWidget(e, remarks, widget.remarkImage),
+          ],
+        );  
       default:
         return SizedBox();
     }
