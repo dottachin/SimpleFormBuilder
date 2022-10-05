@@ -119,7 +119,7 @@ class _FormBuilderState extends State<FormBuilder> {
                       ),
                   child: Center(
                     child: Text(
-                      widget.submitButtonText ?? "Submit",
+                      widget.submitButtonText ?? "Envoyer",
                       style: widget.submitTextDecoration ??
                           TextStyle(color: Colors.white),
                     ),
@@ -140,7 +140,7 @@ class _FormBuilderState extends State<FormBuilder> {
       if (item.answer == null && item.isMandatory == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("${item.title} is mandatory"),
+            content: Text("${item.title} est obligatoire"),
           ),
         );
         f = 1;
@@ -709,7 +709,81 @@ class _FormBuilderState extends State<FormBuilder> {
                       ),
                       decoration: widget.textfieldDecoration ??
                           InputDecoration.collapsed(
-                            hintText: "Enter text here",
+                            hintText: "Text ...",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            remarkWidget(e, remarks, widget.remarkImage),
+          ],
+        );
+        case "number":
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, top: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.showIcon
+                      ? iconContainer(widget.textImage)
+                      : Container(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                        "${widget.showIndex ? "${checklistModel!.data![widget.index].questions!.indexOf(e) + 1}. " : ""}${e.title}"),
+                  ),
+                  descriptionWidget(
+                      e, context, widget.descriptionTextDecoration),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16,
+              ),
+              child: Container(
+                width: screenWidth(
+                    context: context,
+                    mulBy: widget.textFieldWidth == null
+                        ? 0.9
+                        : widget.textFieldWidth),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      maxLines: e.maxline,
+                      keyboardType: TextInputType.numberWithOptions(decimal: allowDecimal),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
+                        TextInputFormatter.withFunction(
+                          (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.replaceAll('.', ','),
+                          ),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        // e.answer = value;
+                        setState(() {
+                          e.answer = value;
+                        });
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: widget.textfieldDecoration ??
+                          InputDecoration.collapsed(
+                            hintText: "Text ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
@@ -763,7 +837,7 @@ class _FormBuilderState extends State<FormBuilder> {
                                   height: 20,
                                 ),
                               ),
-                    Text("Enter remarks"),
+                    Text("Entrer votre commentaire"),
                   ],
                 ),
               ),
@@ -784,7 +858,7 @@ class _FormBuilderState extends State<FormBuilder> {
                             setState(() {});
                           },
                           decoration: InputDecoration.collapsed(
-                            hintText: "Enter your remarks",
+                            hintText: "Entrer votre commentaire",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
