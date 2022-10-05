@@ -249,7 +249,7 @@ class _FormBuilderState extends State<FormBuilder> {
                   child: DropdownButton(
                     underline: SizedBox(),
                     hint: e.answer == null
-                        ? Text('Sélectionner votre option')
+                        ? Text('Sélectionner une option')
                         : Text(
                             e.answer,
                             style: TextStyle(
@@ -709,7 +709,7 @@ class _FormBuilderState extends State<FormBuilder> {
                       ),
                       decoration: widget.textfieldDecoration ??
                           InputDecoration.collapsed(
-                            hintText: "Entrez votre texte ...",
+                            hintText: "Entrez un texte ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
@@ -783,7 +783,7 @@ class _FormBuilderState extends State<FormBuilder> {
                       ),
                       decoration: widget.textfieldDecoration ??
                           InputDecoration.collapsed(
-                            hintText: "Entrez votre texte ...",
+                            hintText: "Entrez une valeur ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
