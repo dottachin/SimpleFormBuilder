@@ -763,15 +763,15 @@ class _FormBuilderState extends State<FormBuilder> {
                     padding: const EdgeInsets.all(16.0),
                     child: TextField(
                       maxLines: e.maxline,
-//                       keyboardType: TextInputType.numberWithOptions(decimal: allowDecimal),
-//                       inputFormatters: <TextInputFormatter>[
-//                         FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
-//                         TextInputFormatter.withFunction(
-//                           (oldValue, newValue) => newValue.copyWith(
-//                             text: newValue.text.replaceAll('.', ','),
-//                           ),
-//                         ),
-//                       ],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
+                        TextInputFormatter.withFunction(
+                          (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.replaceAll('.', ','),
+                          ),
+                        ),
+                      ],
                       onChanged: (value) {
                         // e.answer = value;
                         setState(() {
