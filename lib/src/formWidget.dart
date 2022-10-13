@@ -5,6 +5,7 @@ import 'package:simple_form_builder/src/widgets/descriptionWidget.dart';
 import 'package:flutter/services.dart';
 import '../global/checklistModel.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:async';
 
 class FormBuilder extends StatefulWidget {
   final Map<String, dynamic> initialData;
