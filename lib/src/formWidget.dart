@@ -219,10 +219,10 @@ class _FormBuilderState extends State<FormBuilder> {
     List<Questions>? questions = checklistModel!.data![index].questions;
     for (Questions item in questions!) {
             if(item.title == 'longitude'){
-        item.answer=long
+        item.answer=long;
       }
      if(item.title == 'latitude'){
-        item.answer=lat
+        item.answer=lat;
       }
       
       if (item.answer == null && item.isMandatory == true) {
