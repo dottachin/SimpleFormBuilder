@@ -875,13 +875,13 @@ class _FormBuilderState extends State<FormBuilder> {
                       style: TextStyle(
                         color: Colors.black,
                       ),
-                      decoration: widget.textfieldDecoration ??
-                          InputDecoration.collapsed(
+//                      decoration: widget.textfieldDecoration ??
+ //                         InputDecoration.collapsed(
                             //hintText: "Entrez un texte ...",
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
+//                            hintStyle: TextStyle(
+ //                             fontWeight: FontWeight.normal,
+ //                           ),
+ //                         ),
                     ),
                   ),
                 ),
