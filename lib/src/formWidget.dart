@@ -70,6 +70,7 @@ class FormBuilder extends StatefulWidget {
 
 class _FormBuilderState extends State<FormBuilder> {
   bool servicestatus = false;
+
   bool haspermission = false;
   late LocationPermission permission;
   late Position position;
@@ -109,15 +110,20 @@ class _FormBuilderState extends State<FormBuilder> {
     for (Questions item in questions!) {
             if(item.title == 'longitude'){
         item.answer=long;
+                   setState(() {
+              //refresh UI on update
+            });
       }
      if(item.title == 'latitude'){
         item.answer=lat;
+                   setState(() {
+              //refresh UI on update
+            });
+
       }}
               
               
-                setState(() {
-                  //refresh the UI
-                });
+
             }
       }else{
         print("GPS Service is not enabled, turn on GPS location");
@@ -824,7 +830,7 @@ class _FormBuilderState extends State<FormBuilder> {
             remarkWidget(e, remarks, widget.remarkImage),
           ],
         );
-        case "readonly":
+        case "long":
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -875,13 +881,79 @@ class _FormBuilderState extends State<FormBuilder> {
                       style: TextStyle(
                         color: Colors.black,
                       ),
-//                      decoration: widget.textfieldDecoration ??
- //                         InputDecoration.collapsed(
-                            //hintText: "Entrez un texte ...",
-//                            hintStyle: TextStyle(
- //                             fontWeight: FontWeight.normal,
- //                           ),
- //                         ),
+                      decoration: widget.textfieldDecoration ??
+                          InputDecoration.collapsed(
+                            hintText:long,
+                            hintStyle: TextStyle(
+                             fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            remarkWidget(e, remarks, widget.remarkImage),
+          ],
+        );
+         case "lat":
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, top: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.showIcon
+                      ? iconContainer(widget.textImage)
+                      : Container(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                        "${widget.showIndex ? "${checklistModel!.data![widget.index].questions!.indexOf(e) + 1}. " : ""}${e.title}"),
+                  ),
+                  descriptionWidget(
+                      e, context, widget.descriptionTextDecoration),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16,
+              ),
+              child: Container(
+                width: screenWidth(
+                    context: context,
+                    mulBy: widget.textFieldWidth == null
+                        ? 0.9
+                        : widget.textFieldWidth),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      readOnly:true,
+                      maxLines: e.maxline,
+                      onChanged: (value) {
+                        // e.answer = value;
+                        setState(() {
+                          e.answer = value;
+                        });
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: widget.textfieldDecoration ??
+                          InputDecoration.collapsed(
+                            hintText: lat,
+                            hintStyle: TextStyle(
+                             fontWeight: FontWeight.normal,
+                            ),
+                          ),
                     ),
                   ),
                 ),
