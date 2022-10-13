@@ -105,7 +105,7 @@ class _FormBuilderState extends State<FormBuilder> {
                 });
 
                 getLocation();
-              List<Questions>? questions = checklistModel!.data![index].questions;
+              List<Questions>? questions = checklistModel!.data![0].questions;
                   for (Questions item in questions!) {
             if(item.title == 'longitude'){
         item.answer=long;
