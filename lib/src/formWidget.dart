@@ -12,7 +12,7 @@ class FormBuilder extends StatefulWidget {
 
   final InputDecoration? textfieldDecoration;
   final String onUpload;
-  final String? title;
+  final String? title; 
   final TextStyle? titleStyle;
   final CrossAxisAlignment widgetCrossAxisAlignment;
   final String? description;
