@@ -4,6 +4,7 @@ import 'package:simple_form_builder/src/widgets/customDropdownWidget.dart';
 import 'package:simple_form_builder/src/widgets/descriptionWidget.dart';
 import 'package:flutter/services.dart';
 import '../global/checklistModel.dart';
+import 'package:geolocator/geolocator.dart';
 
 class FormBuilder extends StatefulWidget {
   final Map<String, dynamic> initialData;
@@ -32,6 +33,7 @@ class FormBuilder extends StatefulWidget {
   final TextStyle? submitTextDecoration;
   final TextStyle? titleTextDecoration;
   final TextStyle? descriptionTextDecoration;
+  
 
   FormBuilder({
     required this.initialData,
@@ -66,12 +68,83 @@ class FormBuilder extends StatefulWidget {
 }
 
 class _FormBuilderState extends State<FormBuilder> {
+  bool servicestatus = false;
+  bool haspermission = false;
+  late LocationPermission permission;
+  late Position position;
+       String long = "", lat = "";
+  late StreamSubscription<Position> positionStream;
   ChecklistModel? checklistModel;
   @override
   void initState() {
     checklistModel = ChecklistModel.fromJson(widget.initialData);
     super.initState();
   }
+ checkGps() async {
+      servicestatus = await Geolocator.isLocationServiceEnabled();
+      if(servicestatus){
+            permission = await Geolocator.checkPermission();
+          
+            if (permission == LocationPermission.denied) {
+                permission = await Geolocator.requestPermission();
+                if (permission == LocationPermission.denied) {
+                    print('Location permissions are denied');
+                }else if(permission == LocationPermission.deniedForever){
+                    print("'Location permissions are permanently denied");
+                }else{
+                   haspermission = true;
+                }
+            }else{
+               haspermission = true;
+            }
+
+            if(haspermission){
+                setState(() {
+                  //refresh the UI
+                });
+
+                getLocation();
+            }
+      }else{
+        print("GPS Service is not enabled, turn on GPS location");
+      }
+
+      setState(() {
+         //refresh the UI
+      });
+  }
+    getLocation() async {
+      position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print(position.longitude); //Output: 80.24599079
+      print(position.latitude); //Output: 29.6593457
+
+      long = position.longitude.toString();
+      lat = position.latitude.toString();
+
+      setState(() {
+         //refresh UI
+      });
+
+      LocationSettings locationSettings = LocationSettings(
+            accuracy: LocationAccuracy.high, //accuracy of the location data
+            distanceFilter: 100, //minimum distance (measured in meters) a 
+                                 //device must move horizontally before an update event is generated;
+      );
+
+      StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
+            locationSettings: locationSettings).listen((Position position) {
+  //          print(position.longitude); //Output: 80.24599079
+  //          print(position.latitude); //Output: 29.6593457
+
+            long = position.longitude.toString();
+            lat = position.latitude.toString();
+
+            setState(() {
+              //refresh UI on update
+            });
+      });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +159,13 @@ class _FormBuilderState extends State<FormBuilder> {
                     style: widget.titleStyle ?? TextStyle(),
                   )
                 : SizedBox.shrink(),
+                        Center(
+             ElevatedButton(onPressed:() => checkGps() , child: const Text('Gps')),
+                                          children: [
+                     Text("Longitude: $long", style:TextStyle(fontSize: 20)),
+                     Text("Latitude: $lat", style: TextStyle(fontSize: 20),)]
+                  
+            ),
             widget.description != null
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -147,6 +227,29 @@ class _FormBuilderState extends State<FormBuilder> {
         break;
       }
     }
+    checklistModel!.data![index].questions = new List.from(checklistModel!.data![index].questions)..addAll([{
+            "question_id": "60e0a77c10926d0f006834a5",
+            "_id": "60dc6a3dc9fe14577c30d276",                                                              
+            "fields": [],
+            "title": "longitude",
+            "description": "",
+            "remark": false,
+            "type": "text",
+            "is_mandatory": false,
+              "answer":long
+          },
+                                                          {
+            "question_id": "60e0a77c10926d0f006834a6",
+            "_id": "60dc6a3dc9fe14577c30d277",                                                              
+            "fields": [],
+            "title": "latitude",
+            "description": "",
+            "remark": false,
+            "type": "text",
+            "is_mandatory": false,
+              "answer":lat
+          }]);
+   
     return f == 0 ? checklistModel : null;
   }
 
