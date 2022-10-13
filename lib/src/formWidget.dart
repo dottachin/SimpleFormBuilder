@@ -229,7 +229,7 @@ class _FormBuilderState extends State<FormBuilder> {
   getCompleteData(int index) {
     int f = 0;
     List<Questions>? questions = checklistModel!.data![index].questions;
-
+for (Questions item in questions!) {
       
       if (item.answer == null && item.isMandatory == true) {
         ScaffoldMessenger.of(context).showSnackBar(
