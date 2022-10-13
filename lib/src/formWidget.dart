@@ -218,6 +218,13 @@ class _FormBuilderState extends State<FormBuilder> {
     int f = 0;
     List<Questions>? questions = checklistModel!.data![index].questions;
     for (Questions item in questions!) {
+            if(item.title == longitude){
+        item.answer=long
+      }
+     if(item.title == latitude){
+        item.answer=lat
+      }
+      
       if (item.answer == null && item.isMandatory == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -227,30 +234,8 @@ class _FormBuilderState extends State<FormBuilder> {
         f = 1;
         break;
       }
+
     }
-    checklistModel!.data![index].questions = new List.from(checklistModel!.data![index].questions)..addAll([{
-            "question_id": "60e0a77c10926d0f006834a5",
-            "_id": "60dc6a3dc9fe14577c30d276",                                                              
-            "fields": [],
-            "title": "longitude",
-            "description": "",
-            "remark": false,
-            "type": "text",
-            "is_mandatory": false,
-              "answer":long
-          },
-                                                          {
-            "question_id": "60e0a77c10926d0f006834a6",
-            "_id": "60dc6a3dc9fe14577c30d277",                                                              
-            "fields": [],
-            "title": "latitude",
-            "description": "",
-            "remark": false,
-            "type": "text",
-            "is_mandatory": false,
-              "answer":lat
-          }]);
-   
     return f == 0 ? checklistModel : null;
   }
 
