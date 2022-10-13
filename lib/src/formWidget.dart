@@ -105,6 +105,15 @@ class _FormBuilderState extends State<FormBuilder> {
                 });
 
                 getLocation();
+              List<Questions>? questions = checklistModel!.data![index].questions;
+                  for (Questions item in questions!) {
+            if(item.title == 'longitude'){
+        item.answer=long;
+      }
+     if(item.title == 'latitude'){
+        item.answer=lat;
+      }}
+              
             }
       }else{
         print("GPS Service is not enabled, turn on GPS location");
@@ -163,6 +172,9 @@ class _FormBuilderState extends State<FormBuilder> {
                         Center(child: Column(children:[ElevatedButton(onPressed:() => checkGps() , child: const Text('Gps')),
                                          
                      Text("Longitude: $long", style:TextStyle(fontSize: 20)),
+                             SizedBox(
+              height: 10,
+            ),
                      Text("Latitude: $lat", style: TextStyle(fontSize: 20))]
              
                   
@@ -217,13 +229,7 @@ class _FormBuilderState extends State<FormBuilder> {
   getCompleteData(int index) {
     int f = 0;
     List<Questions>? questions = checklistModel!.data![index].questions;
-    for (Questions item in questions!) {
-            if(item.title == 'longitude'){
-        item.answer=long;
-      }
-     if(item.title == 'latitude'){
-        item.answer=lat;
-      }
+
       
       if (item.answer == null && item.isMandatory == true) {
         ScaffoldMessenger.of(context).showSnackBar(
