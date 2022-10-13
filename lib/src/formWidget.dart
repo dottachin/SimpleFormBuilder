@@ -166,7 +166,7 @@ class _FormBuilderState extends State<FormBuilder> {
                      Text("Latitude: $lat", style: TextStyle(fontSize: 20))]
              
                   
-            ),
+            )),
             widget.description != null
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
