@@ -105,6 +105,19 @@ class _FormBuilderState extends State<FormBuilder> {
                 });
 
                 getLocation();
+    List<Questions>? questions = checklistModel!.data![0].questions;
+    for (Questions item in questions!) {
+            if(item.title == 'longitude'){
+        item.answer=long;
+      }
+     if(item.title == 'latitude'){
+        item.answer=lat;
+      }}
+              
+              
+                setState(() {
+                  //refresh the UI
+                });
             }
       }else{
         print("GPS Service is not enabled, turn on GPS location");
@@ -799,6 +812,72 @@ class _FormBuilderState extends State<FormBuilder> {
                       decoration: widget.textfieldDecoration ??
                           InputDecoration.collapsed(
                             hintText: "Entrez un texte ...",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            remarkWidget(e, remarks, widget.remarkImage),
+          ],
+        );
+        case "readonly":
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, top: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget.showIcon
+                      ? iconContainer(widget.textImage)
+                      : Container(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text(
+                        "${widget.showIndex ? "${checklistModel!.data![widget.index].questions!.indexOf(e) + 1}. " : ""}${e.title}"),
+                  ),
+                  descriptionWidget(
+                      e, context, widget.descriptionTextDecoration),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 16,
+              ),
+              child: Container(
+                width: screenWidth(
+                    context: context,
+                    mulBy: widget.textFieldWidth == null
+                        ? 0.9
+                        : widget.textFieldWidth),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      readOnly:true,
+                      maxLines: e.maxline,
+                      onChanged: (value) {
+                        // e.answer = value;
+                        setState(() {
+                          e.answer = value;
+                        });
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: widget.textfieldDecoration ??
+                          InputDecoration.collapsed(
+                            //hintText: "Entrez un texte ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
