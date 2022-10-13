@@ -160,11 +160,11 @@ class _FormBuilderState extends State<FormBuilder> {
                     style: widget.titleStyle ?? TextStyle(),
                   )
                 : SizedBox.shrink(),
-                        Center(
-             ElevatedButton(onPressed:() => checkGps() , child: const Text('Gps')),
-                                          children: [
+                        Center(child: Column(children:[ElevatedButton(onPressed:() => checkGps() , child: const Text('Gps')),
+                                         
                      Text("Longitude: $long", style:TextStyle(fontSize: 20)),
-                     Text("Latitude: $lat", style: TextStyle(fontSize: 20),)]
+                     Text("Latitude: $lat", style: TextStyle(fontSize: 20))]
+             
                   
             ),
             widget.description != null
