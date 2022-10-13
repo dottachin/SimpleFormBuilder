@@ -953,7 +953,7 @@ for (Questions item in questions!) {
                             setState(() {});
                           },
                           decoration: InputDecoration.collapsed(
-                            hintText: "Entrer votre commentaire",
+                            hintText: "Entrer votre commentaire ...",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
